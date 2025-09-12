@@ -2,17 +2,18 @@ package config
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"os"
 	"strconv"
-	"github.com/joho/godotenv"
 )
 
 var configurations Config
 
 type Config struct {
-	Version string
-	ServiceName string
-	HttpPort int
+	Version      string
+	ServiceName  string
+	HttpPort     int
+	JwtSecretKey string
 }
 
 func loadConfig() {
@@ -21,7 +22,7 @@ func loadConfig() {
 		fmt.Println("Failed to load the .env variables: ", err)
 		os.Exit(1)
 	}
-	
+
 	version := os.Getenv("VERSION")
 
 	if version == "" {
@@ -47,10 +48,18 @@ func loadConfig() {
 		os.Exit(1)
 	}
 
+	jwtSecretKey := os.Getenv("JWT_SECRET_KEY")
+	
+	if jwtSecretKey == "" {
+		fmt.Println("JWT Secret Key is required")
+		os.Exit(1)
+	}
+
 	configurations = Config{
-		Version: version,
-		ServiceName: serviceName,
-		HttpPort: int(port),
+		Version:      version,
+		ServiceName:  serviceName,
+		HttpPort:     int(port),
+		JwtSecretKey: jwtSecretKey,
 	}
 }
 

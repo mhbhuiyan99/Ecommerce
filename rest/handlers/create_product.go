@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"net/http"
-	"encoding/json"
-	"fmt"
 	"ecommerce/database"
 	"ecommerce/util"
+	"encoding/json"
+	"fmt"
+	"net/http"
 )
 
 func CreateProduct(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +20,9 @@ func CreateProduct(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "please give me valid JSON", 400)
 		return
 	}
+
 	createProduct := database.Store(newProduct)
 
 	util.SendData(w, createProduct, 201) 
 }
+

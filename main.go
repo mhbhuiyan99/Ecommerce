@@ -1,15 +1,16 @@
 package main
 
 import (
-	//"ecommerce/cmd"
-	"ecommerce/util"
-	"fmt"
+	"ecommerce/cmd"
+	//"ecommerce/util"
+	//"fmt"
 )
 
 func main(){
-	//cmd.Serve()
+	cmd.Serve()
+	/*
 	jwt, err := util.CreateJwt("my-secret", util.Payload{
-		Sub:         "55",
+		Sub:         55,
 		FirstName:   "Mojammel Haque",
 		LastName:    "Bhuiyan",
 		Email:       "mhbhuiyan10023@gmail.com",
@@ -21,4 +22,5 @@ func main(){
 	}
 
 	fmt.Println(jwt)
+	*/
 }
