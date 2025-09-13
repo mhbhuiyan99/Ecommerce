@@ -1,4 +1,4 @@
-package handlers
+package review
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 	"ecommerce/util"
 )
 
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) GetReviews(w http.ResponseWriter, r *http.Request) {
 
 	var newUser database.User
 	
