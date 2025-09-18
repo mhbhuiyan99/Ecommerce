@@ -3,7 +3,7 @@ package middleware
 import (
 	"crypto/hmac"
 	"crypto/sha256"
-	"ecommerce/database"
+	"ecommerce/repo"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -55,7 +55,7 @@ func (m *Middlewares) AuthenticateJWT(next http.Handler) http.Handler {
 		return
 	}
 
-	var newProduct database.Product
+	var newProduct repo.Product
 	
 	decoder := json.NewDecoder(r.Body) // take the information from frontend 
 	err := decoder.Decode(&newProduct) // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)

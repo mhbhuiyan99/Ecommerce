@@ -1,7 +1,7 @@
 package product
 
 import (
-	"ecommerce/database"
+	"ecommerce/repo"
 	"ecommerce/util"
 	"encoding/json"
 	"fmt"
@@ -9,27 +9,44 @@ import (
 	"strconv"
 )
 
+type ReqUpdateProduct struct {
+	ID int `json:"id"`
+	Title string `json:"title"`
+	Description string `json:"description"`
+	Price float64 `json:"price"`
+	ImageURL string `json:"imageUrl"`
+}
+
 func (h *Handler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	productID := r.PathValue("id") // Extract productId from the request path
 
 	pId, err := strconv.Atoi(productID) // Convert productId to integer if needed
 	if err != nil {
-		http.Error(w, "Invalid product ID", 400)
+		util.SendError(w, http.StatusBadRequest, "Invalid product ID")
 		return
 	}
 	
-	var newProduct database.Product
+	var req ReqUpdateProduct
 	
 	decoder := json.NewDecoder(r.Body) // take the information from frontend 
-	err = decoder.Decode(&newProduct) // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
+	err = decoder.Decode(&req) // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
 
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "please give me valid JSON", 400)
+		util.SendError(w, http.StatusBadRequest, "Invalid req body")
 		return
 	}
 
-	newProduct.ID = pId
-	database.Update(newProduct)
-	util.SendData(w, "Successfully updated product", 201)
+	_, err = h.productRepo.Update(repo.Product{
+		ID:	pId, 
+		Title: req.Title, 
+		Description:  req.Description, 
+		Price: req.Price, 
+		ImageURL: req.ImageURL,
+	})
+	if err != nil {	
+		util.SendError(w, http.StatusInternalServerError, "Internal server error")
+		return
+	}
+	util.SendData(w, http.StatusOK ,"Successfully updated product")
 }

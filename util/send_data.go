@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 )
 
-func SendData(w http.ResponseWriter, data interface{}, statusCode int) { // data interface{} for getting any types of data
+func SendData(w http.ResponseWriter, statusCode int, data interface{}) { // data interface{} for getting any types of data
 	w.WriteHeader(statusCode)
 	encoder := json.NewEncoder(w) 
 	encoder.Encode(data) 
