@@ -9,18 +9,18 @@ import (
 )
 
 type ReqCreateProduct struct {
-	Title string `json:"title"`
-	Description string `json:"description"`
-	Price float64 `json:"price"`
-	ImageURL string `json:"imageUrl"`
+	Title       string  `json:"title"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	ImgUrl      string  `json:"imageUrl"`
 }
 
 func (h *Handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 
 	var req ReqCreateProduct
-	
-	decoder := json.NewDecoder(r.Body) // take the information from frontend 
-	err := decoder.Decode(&req) // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
+
+	decoder := json.NewDecoder(r.Body) // take the information from frontend
+	err := decoder.Decode(&req)        // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
 
 	if err != nil {
 		fmt.Println(err)
@@ -29,10 +29,10 @@ func (h *Handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	createProduct, err := h.productRepo.Create(repo.Product{
-		Title: req.Title,
+		Title:       req.Title,
 		Description: req.Description,
-		Price: req.Price,
-		ImageURL: req.ImageURL,
+		Price:       req.Price,
+		ImgUrl:      req.ImgUrl,
 	})
 
 	if err != nil {
@@ -40,6 +40,5 @@ func (h *Handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.SendData(w, http.StatusCreated, createProduct) 
+	util.SendData(w, http.StatusCreated, createProduct)
 }
-

@@ -19,9 +19,9 @@ type ReqCreateUser struct {
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	var req ReqCreateUser
-	
-	decoder := json.NewDecoder(r.Body) // take the information from frontend 
-	err := decoder.Decode(&req) // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
+
+	decoder := json.NewDecoder(r.Body) // take the information from frontend
+	err := decoder.Decode(&req)        // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
 
 	if err != nil {
 		fmt.Println(err)
@@ -29,10 +29,10 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	usr, err := h.userRepo.Create(repo.User{
-		FirstName: req.FirstName,
-		LastName: req.LastName,
-		Email: req.Email,
-		Password: req.Password,
+		FirstName:   req.FirstName,
+		LastName:    req.LastName,
+		Email:       req.Email,
+		Password:    req.Password,
 		IsShopOwner: req.IsShopOwner,
 	})
 	if err != nil {
@@ -40,5 +40,5 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	util.SendData(w, http.StatusCreated, usr) 
+	util.SendData(w, http.StatusCreated, usr)
 }

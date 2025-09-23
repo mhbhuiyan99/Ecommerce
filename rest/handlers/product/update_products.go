@@ -14,7 +14,7 @@ type ReqUpdateProduct struct {
 	Title string `json:"title"`
 	Description string `json:"description"`
 	Price float64 `json:"price"`
-	ImageURL string `json:"imageUrl"`
+	ImgUrl string `json:"imageUrl"`
 }
 
 func (h *Handler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +42,7 @@ func (h *Handler) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 		Title: req.Title, 
 		Description:  req.Description, 
 		Price: req.Price, 
-		ImageURL: req.ImageURL,
+		ImgUrl: req.ImgUrl,
 	})
 	if err != nil {	
 		util.SendError(w, http.StatusInternalServerError, "Internal server error")

@@ -3,10 +3,10 @@ package middleware
 import (
 	"crypto/hmac"
 	"crypto/sha256"
-	"ecommerce/repo"
+	//"ecommerce/repo"
 	"encoding/base64"
-	"encoding/json"
-	"fmt"
+	//"encoding/json"
+	//"fmt"
 	"net/http"
 	"strings"
 )
@@ -55,18 +55,9 @@ func (m *Middlewares) AuthenticateJWT(next http.Handler) http.Handler {
 		return
 	}
 
-	var newProduct repo.Product
-	
-	decoder := json.NewDecoder(r.Body) // take the information from frontend 
-	err := decoder.Decode(&newProduct) // decoder decodes the JSON data from r.Body into the newProduct variable and place it in the address of newProduct (&newProduct)
-
-	if err != nil {
-		fmt.Println(err)
-		http.Error(w, "please give me valid JSON", 400)
-		return
-	}
-		next.ServeHTTP(w, r)
-	})
+	next.ServeHTTP(w, r)
+ })
+		
 }
 
 func base64UrlEncode(data []byte) string {
